@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.2.xsd
+  http://www.springframework.org/schema/tx
+  http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="su.pos" />
+
+    <context:property-placeholder location="WEB-INF/spring.properties" />
+<!--location="/src/main/webapp/WEB-INF/spring.properties"-->
+    <bean id="UserDaoImpl" class="su.pos.sevice.UserDaoImpl">
+
+    </bean>
+
+    <!-- Enable annotation style of managing transactions -->
+
+
+    <!-- Declare the Hibernate SessionFactory for retrieving Hibernate sessions -->
+    <!-- See http://static.springsource.org/spring/docs/3.0.x/javadoc-api/org/springframework/orm/hibernate3/annotation/AnnotationSessionFactoryBean.html -->
+    <!-- See http://docs.jboss.org/hibernate/stable/core/api/index.html?org/hibernate/SessionFactory.html -->
+    <!-- See http://docs.jboss.org/hibernate/stable/core/api/index.html?org/hibernate/Session.html -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+
+          p:dataSource-ref="dataSource"
+          p:configLocation="${hibernate.config}"
+          p:packagesToScan="su.pos"/>
+
+    <!-- Declare a datasource that has pooling capabilities-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="${app.jdbc.driverClassName}"
+          p:url="${app.jdbc.url}"
+          p:username="${app.jdbc.username}"
+          p:password="${app.jdbc.password}"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- Declare a transaction manager-->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+
+          p:sessionFactory-ref="sessionFactory"
+    />
+
+</beans>
