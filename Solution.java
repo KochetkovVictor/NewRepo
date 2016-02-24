@@ -22,9 +22,9 @@ sin(2*(-5+1.5*4)+28)
 public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
-       // solution.recursion("sin(2*(-5+1.5*4)+28)", 0);
+        //solution.recursion("sin(2*(-5+1.5*4)+28)", 0);
        // solution.recursion("-sin(2*(-5+1.5*4)+28)", 0);
-        solution.recursion("tan(45)", 0);
+        solution.recursion("1.5*4", 0);
 
         solution.recursion("(1+2*4+2^4-50)",0);
         //solution.recursion("(sin(2*(-5+1.5*4)+28)+1)+2*cos(24.3+(3*1))+77",0);
@@ -160,7 +160,7 @@ public class Solution {
             {
                 if (symbols.get(i).equals("/"))
                 {
-                    symbols.set(i-1, Double.parseDouble(symbols.get(i - 1))/ Double.parseDouble(symbols.get(i + 1)) + "");
+                    symbols.set(i-1, Double.parseDouble(symbols.get(i - 1))/Double.parseDouble(symbols.get(i + 1)) + "");
                     symbols.remove(i);
                     symbols.remove(i);
                     i--;
@@ -192,6 +192,7 @@ public class Solution {
                 answer=answer+Double.parseDouble(s);
             }
             result=answer+"";
+            countOperation--;
         }
         else
         {
